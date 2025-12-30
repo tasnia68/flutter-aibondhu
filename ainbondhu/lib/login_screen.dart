@@ -7,42 +7,34 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/background.png'),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
-          child: Column(
-            children: [
-              const _Header(),
-              Expanded(
-                child: ListView(
-                  children: const [
-                    SizedBox(height: 20),
-                    _Logo(),
-                    SizedBox(height: 40),
-                    _WelcomeMessage(),
-                    SizedBox(height: 20),
-                    _PhoneNumberInput(),
-                    SizedBox(height: 20),
-                    _OtpButton(),
-                    SizedBox(height: 20),
-                    _OrDivider(),
-                    SizedBox(height: 20),
-                    _SocialLogins(),
-                    SizedBox(height: 20),
-                    _Footer(),
-                    SizedBox(height: 20),
-                  ],
-                ),
+    return Scaffold(
+      backgroundColor: const Color(0xFFFFFDD0),
+      body: SafeArea(
+        child: Column(
+          children: [
+            const _Header(),
+            Expanded(
+              child: ListView(
+                children: const [
+                  SizedBox(height: 20),
+                  _Logo(),
+                  SizedBox(height: 40),
+                  _WelcomeMessage(),
+                  SizedBox(height: 20),
+                  _PhoneNumberInput(),
+                  SizedBox(height: 20),
+                  _OtpButton(),
+                  SizedBox(height: 20),
+                  _OrDivider(),
+                  SizedBox(height: 20),
+                  _SocialLogins(),
+                  SizedBox(height: 20),
+                  _Footer(),
+                  SizedBox(height: 20),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -1,48 +1,91 @@
 import 'package:ainbondhu/common/components.dart';
 import 'package:ainbondhu/otp_screen.dart';
+import 'package:ainbondhu/providers/auth_provider.dart';
+import 'package:ainbondhu/providers/base_provider.dart';
+import 'package:ainbondhu/ui/templates/base_page_template.dart';
 import 'package:ainbondhu/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _phoneController = TextEditingController();
+
+  @override
+  void dispose() {
+    _phoneController.dispose();
+    super.dispose();
+  }
+
+  void _onLoginPressed(BuildContext context) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final phone = _phoneController.text.trim();
+
+    if (phone.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a phone number')),
+      );
+      return;
+    }
+
+    // Call API
+    final success = await authProvider.login(phone);
+    if (success && mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const OtpScreen()),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
-      body: SafeArea(
-        child: Column(
-          children: [
-            CommonHeader(
-              // Back button hidden or handled
-              onBack: () {}, // Or null if no back
-              onSupport: () {},
-            ),
-            Expanded(
-              child: ListView(
-                children: const [
-                  SizedBox(height: 20),
-                  AppLogo(),
-                  SizedBox(height: 40),
-                  _WelcomeMessage(),
-                  SizedBox(height: 20),
-                  _PhoneNumberInput(),
-                  SizedBox(height: 20),
-                  _OtpButton(),
-                  SizedBox(height: 20),
-                  _OrDivider(),
-                  SizedBox(height: 20),
-                  _SocialLogins(),
-                  SizedBox(height: 20),
-                  _Footer(),
-                  SizedBox(height: 20),
-                ],
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, child) {
+        return BasePageTemplate(
+          isLoading: authProvider.state == ViewState.busy,
+          errorMessage: authProvider.errorMessage,
+          onErrorDismissed: authProvider.clearError,
+          showAppBar: false,
+          body: Column(
+            children: [
+              CommonHeader(
+                onBack: () {},
+                onSupport: () {},
               ),
-            ),
-          ],
-        ),
-      ),
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  children: [
+                    const SizedBox(height: 20),
+                    const AppLogo(),
+                    const SizedBox(height: 40),
+                    const _WelcomeMessage(),
+                    const SizedBox(height: 20),
+                    _PhoneNumberInput(controller: _phoneController),
+                    const SizedBox(height: 20),
+                    _OtpButton(onPressed: () => _onLoginPressed(context)),
+                    const SizedBox(height: 20),
+                    const _OrDivider(),
+                    const SizedBox(height: 20),
+                    const _SocialLogins(),
+                    const SizedBox(height: 20),
+                    const _Footer(),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -63,7 +106,7 @@ class _WelcomeMessage extends StatelessWidget {
         Text(
           'শুরু করতে আপনার মোবাইল নম্বর দিন',
           textAlign: TextAlign.center,
-          style: AppTextStyles.bodyLarge, // Used bodyLarge but color grey might be needed
+          style: AppTextStyles.bodyLarge,
         ),
       ],
     );
@@ -71,13 +114,17 @@ class _WelcomeMessage extends StatelessWidget {
 }
 
 class _PhoneNumberInput extends StatelessWidget {
-  const _PhoneNumberInput();
+  final TextEditingController controller;
+
+  const _PhoneNumberInput({required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextField(
+        controller: controller,
+        keyboardType: TextInputType.phone,
         decoration: InputDecoration(
           prefixIcon: const Padding(
             padding: EdgeInsets.all(8.0),
@@ -109,7 +156,9 @@ class _PhoneNumberInput extends StatelessWidget {
 }
 
 class _OtpButton extends StatelessWidget {
-  const _OtpButton();
+  final VoidCallback onPressed;
+
+  const _OtpButton({required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -117,12 +166,7 @@ class _OtpButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: CustomButton(
         text: 'ওটিপি পাঠান',
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const OtpScreen()),
-          );
-        },
+        onPressed: onPressed,
       ),
     );
   }

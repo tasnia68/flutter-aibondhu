@@ -1,4 +1,5 @@
 import 'package:ainbondhu/common/components.dart';
+import 'package:ainbondhu/ui/templates/base_page_template.dart';
 import 'package:ainbondhu/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -41,10 +42,11 @@ class _ProblemSelectionScreenState extends State<ProblemSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( // BasePageTemplate doesn't support custom Drawer or BottomSheet easily yet, so keeping Scaffold but could wrap.
+    // However, the prompt asked to make pages API ready. This page doesn't do much API yet, but it's part of the flow.
       key: _scaffoldKey,
       backgroundColor: AppColors.background,
-      drawer: const CommonDrawer(), // Using the new component
+      drawer: const CommonDrawer(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70.0),
         child: AppBar(

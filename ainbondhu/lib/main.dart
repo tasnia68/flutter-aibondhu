@@ -1,5 +1,5 @@
 
-import 'package:ainbondhu/login_screen.dart';
+import 'package:ainbondhu/problem_selection_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color(0xFFD0BB95),
         fontFamily: 'Manrope',
       ),
-      home: const LoginScreen(),
+      home: const ProblemSelectionScreen(),
     );
   }
 }

@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (success && mounted) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const OtpScreen()),
+        MaterialPageRoute(builder: (context) => OtpScreen(phoneNumber: phone)),
       );
     }
   }

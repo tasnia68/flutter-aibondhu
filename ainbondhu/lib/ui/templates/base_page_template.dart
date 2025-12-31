@@ -13,10 +13,18 @@ class BasePageTemplate extends StatelessWidget {
   final bool isLoading;
   final String? errorMessage;
   final VoidCallback? onErrorDismissed;
+
+  // App Bar Configuration
   final bool showAppBar;
+  final PreferredSizeWidget? customAppBar; // Allows passing a fully custom App Bar
   final List<Widget>? actions;
+
+  // Scaffold Configuration
   final Widget? floatingActionButton;
   final Color backgroundColor;
+  final Widget? drawer;
+  final Widget? bottomSheet;
+  final GlobalKey<ScaffoldState>? scaffoldKey; // To control drawer
 
   const BasePageTemplate({
     super.key,
@@ -26,25 +34,40 @@ class BasePageTemplate extends StatelessWidget {
     this.errorMessage,
     this.onErrorDismissed,
     this.showAppBar = true,
+    this.customAppBar,
     this.actions,
     this.floatingActionButton,
     this.backgroundColor = AppColors.backgroundLight,
+    this.drawer,
+    this.bottomSheet,
+    this.scaffoldKey,
   });
 
   @override
   Widget build(BuildContext context) {
+    PreferredSizeWidget? appBarToUse;
+
+    if (showAppBar) {
+      if (customAppBar != null) {
+        appBarToUse = customAppBar;
+      } else {
+        appBarToUse = AppBar(
+          title: Text(title, style: AppTextStyles.headlineSmall),
+          centerTitle: true,
+          actions: actions,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          iconTheme: const IconThemeData(color: Colors.black),
+        );
+      }
+    }
+
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: backgroundColor,
-      appBar: showAppBar
-          ? AppBar(
-              title: Text(title, style: AppTextStyles.headlineSmall),
-              centerTitle: true,
-              actions: actions,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              iconTheme: const IconThemeData(color: Colors.black),
-            )
-          : null,
+      appBar: appBarToUse,
+      drawer: drawer,
+      bottomSheet: bottomSheet,
       floatingActionButton: floatingActionButton,
       body: Stack(
         children: [

@@ -1,5 +1,6 @@
 import 'package:ainbondhu/login_screen.dart';
 import 'package:ainbondhu/providers/auth_provider.dart';
+import 'package:ainbondhu/providers/category_provider.dart';
 import 'package:ainbondhu/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class AinBondhuApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => CategoryProvider()),
       ],
       child: MaterialApp(
         title: 'AinBondhu',

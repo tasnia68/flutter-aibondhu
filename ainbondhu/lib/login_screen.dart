@@ -1,4 +1,5 @@
 
+import 'package:ainbondhu/otp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -160,7 +161,12 @@ class _OtpButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const OtpScreen()),
+          );
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFFD0BB95),
           padding: const EdgeInsets.symmetric(vertical: 16),

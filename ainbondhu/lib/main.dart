@@ -1,5 +1,5 @@
-
-import 'package:ainbondhu/problem_selection_screen.dart';
+import 'package:ainbondhu/login_screen.dart';
+import 'package:ainbondhu/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,10 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'AinBondhu',
       theme: ThemeData(
-        primaryColor: const Color(0xFFD0BB95),
+        primaryColor: AppColors.primary,
         fontFamily: 'Manrope',
+        scaffoldBackgroundColor: AppColors.background,
       ),
-      home: const ProblemSelectionScreen(),
+      home: const LoginScreen(),
     );
   }
 }

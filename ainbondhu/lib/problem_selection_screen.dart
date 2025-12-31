@@ -1,3 +1,5 @@
+import 'package:ainbondhu/common/components.dart';
+import 'package:ainbondhu/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class ProblemSelectionScreen extends StatefulWidget {
@@ -22,8 +24,10 @@ class Category {
 }
 
 class _ProblemSelectionScreenState extends State<ProblemSelectionScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // For Drawer
+
   final List<Category> categories = [
-    Category(title: 'পারিবারিক', description: 'বিবাহ, তালাক, ভরণপোষণ ও অভিভাবকত্ব', icon: Icons.family_restroom, color: const Color(0xFFD0BB95)),
+    Category(title: 'পারিবারিক', description: 'বিবাহ, তালাক, ভরণপোষণ ও অভিভাবকত্ব', icon: Icons.family_restroom, color: AppColors.primary),
     Category(title: 'জমি ও সম্পত্তি', description: 'নামজারি, দখল, রেজিস্ট্রেশন ও বন্টন', icon: Icons.landscape, color: Colors.blue),
     Category(title: 'ফৌজদারি', description: 'মামলা, জামিন, জিডি ও পুলিশি সহায়তা', icon: Icons.gavel, color: Colors.red),
     Category(title: 'চেক ও অর্থ', description: 'চেক ডিজঅনার, লোন ও আর্থিক লেনদেন', icon: Icons.payments, color: Colors.green),
@@ -38,25 +42,29 @@ class _ProblemSelectionScreenState extends State<ProblemSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7F6),
+      key: _scaffoldKey,
+      backgroundColor: AppColors.background,
+      drawer: const CommonDrawer(), // Using the new component
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70.0),
         child: AppBar(
-          backgroundColor: const Color(0xFFF7F7F6),
+          backgroundColor: AppColors.background,
           elevation: 0,
           leading: IconButton(
             icon: const Icon(Icons.menu, color: Colors.grey),
-            onPressed: () {},
+            onPressed: () {
+              _scaffoldKey.currentState?.openDrawer();
+            },
           ),
-          title: Row(
+          title: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.balance, color: Color(0xFFD0BB95)),
-              const SizedBox(width: 8),
-              const Text(
+              Icon(Icons.balance, color: AppColors.primary),
+              SizedBox(width: 8),
+              Text(
                 'আইনবন্ধু',
                 style: TextStyle(
-                  color: Color(0xFFD0BB95),
+                  color: AppColors.primary,
                   fontFamily: 'Manrope',
                   fontWeight: FontWeight.bold,
                   fontSize: 20
@@ -75,17 +83,17 @@ class _ProblemSelectionScreenState extends State<ProblemSelectionScreen> {
                   right: 8,
                   top: 8,
                   child: Container(
-                    padding: EdgeInsets.all(2),
+                    padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: Color(0xFFD0BB95),
+                      color: AppColors.primary,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.white, width: 2)
                     ),
-                    constraints: BoxConstraints(
+                    constraints: const BoxConstraints(
                       minWidth: 16,
                       minHeight: 16,
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         '3',
                         style: TextStyle(
@@ -127,7 +135,7 @@ class _ProblemSelectionScreenState extends State<ProblemSelectionScreen> {
                       fontSize: 28,
                       fontWeight: FontWeight.w800,
                       fontFamily: 'Manrope',
-                      color: Color(0xFF2A3441)
+                      color: AppColors.textPrimary
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -150,7 +158,7 @@ class _ProblemSelectionScreenState extends State<ProblemSelectionScreen> {
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: EdgeInsets.symmetric(vertical: 18)
+                      contentPadding: const EdgeInsets.symmetric(vertical: 18)
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -180,7 +188,7 @@ class _ProblemSelectionScreenState extends State<ProblemSelectionScreen> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: isSelected ? const Color(0xFFD0BB95) : Colors.transparent,
+                              color: isSelected ? AppColors.primary : Colors.transparent,
                               width: 2,
                             ),
                             boxShadow: [
@@ -188,7 +196,7 @@ class _ProblemSelectionScreenState extends State<ProblemSelectionScreen> {
                                 color: Colors.black.withOpacity(0.05),
                                 spreadRadius: 1,
                                 blurRadius: 10,
-                                offset: Offset(0, 4)
+                                offset: const Offset(0, 4)
                               ),
                             ],
                           ),
@@ -214,7 +222,7 @@ class _ProblemSelectionScreenState extends State<ProblemSelectionScreen> {
                                       width: 24,
                                       height: 24,
                                       decoration: const BoxDecoration(
-                                        color: Color(0xFFD0BB95),
+                                        color: AppColors.primary,
                                         shape: BoxShape.circle,
                                       ),
                                       child: const Icon(Icons.check, color: Colors.white, size: 16),
@@ -230,7 +238,7 @@ class _ProblemSelectionScreenState extends State<ProblemSelectionScreen> {
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'Manrope',
-                                      color: Color(0xFF2A3441)
+                                      color: AppColors.textPrimary
                                     ),
                                   ),
                                   const SizedBox(height: 4),
@@ -252,7 +260,7 @@ class _ProblemSelectionScreenState extends State<ProblemSelectionScreen> {
                       );
                     },
                   ),
-                  SizedBox(height: 120) // For bottom button spacing
+                  const SizedBox(height: 120) // For bottom button spacing
                 ],
               ),
             ),
@@ -262,27 +270,27 @@ class _ProblemSelectionScreenState extends State<ProblemSelectionScreen> {
       bottomSheet: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: const Color(0xFFF7F7F6).withOpacity(0.0),
+          color: AppColors.background.withOpacity(0.0),
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              const Color(0xFFF7F7F6).withOpacity(0.0),
-              const Color(0xFFF7F7F6).withOpacity(1.0),
-              const Color(0xFFF7F7F6).withOpacity(1.0),
+              AppColors.background.withOpacity(0.0),
+              AppColors.background.withOpacity(1.0),
+              AppColors.background.withOpacity(1.0),
             ],
-            stops: [0.0, 0.4, 1.0]
+            stops: const [0.0, 0.4, 1.0]
           )
         ),
         child: ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFD0BB95),
+            backgroundColor: AppColors.primary,
             minimumSize: const Size(double.infinity, 60),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
-            shadowColor: const Color(0xFFD0BB95).withOpacity(0.5),
+            shadowColor: AppColors.primary.withOpacity(0.5),
             elevation: 8
           ),
           child: const Row(

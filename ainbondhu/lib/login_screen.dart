@@ -1,5 +1,6 @@
-
+import 'package:ainbondhu/common/components.dart';
 import 'package:ainbondhu/otp_screen.dart';
+import 'package:ainbondhu/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -9,16 +10,20 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFDD0),
+      backgroundColor: AppColors.backgroundLight,
       body: SafeArea(
         child: Column(
           children: [
-            const _Header(),
+            CommonHeader(
+              // Back button hidden or handled
+              onBack: () {}, // Or null if no back
+              onSupport: () {},
+            ),
             Expanded(
               child: ListView(
                 children: const [
                   SizedBox(height: 20),
-                  _Logo(),
+                  AppLogo(),
                   SizedBox(height: 40),
                   _WelcomeMessage(),
                   SizedBox(height: 20),
@@ -42,73 +47,23 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class _Header extends StatelessWidget {
-  const _Header();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {},
-          ),
-          TextButton.icon(
-            icon: const Icon(Icons.support_agent),
-            label: const Text('সাহায্য প্রয়োজন?'),
-            onPressed: () {},
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _Logo extends StatelessWidget {
-  const _Logo();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Icon(Icons.balance, size: 80, color: Color(0xFFD0BB95)),
-        const SizedBox(height: 16),
-        const Text(
-          'আইনবন্ধু',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          'আইন সেবায় আপনার বিশ্বস্ত ডিজিটাল সঙ্গী',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 16, color: Colors.grey),
-        ),
-      ],
-    );
-  }
-}
-
 class _WelcomeMessage extends StatelessWidget {
   const _WelcomeMessage();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        const Text(
+        Text(
           'স্বাগতম!',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: AppTextStyles.headlineSmall,
         ),
-        const SizedBox(height: 8),
-        const Text(
+        SizedBox(height: 8),
+        Text(
           'শুরু করতে আপনার মোবাইল নম্বর দিন',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 16, color: Colors.grey),
+          style: AppTextStyles.bodyLarge, // Used bodyLarge but color grey might be needed
         ),
       ],
     );
@@ -160,24 +115,14 @@ class _OtpButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: ElevatedButton(
+      child: CustomButton(
+        text: 'ওটিপি পাঠান',
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const OtpScreen()),
           );
         },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFFD0BB95),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        child: const Text(
-          'ওটিপি পাঠান',
-          style: TextStyle(fontSize: 18, color: Colors.white),
-        ),
       ),
     );
   }
@@ -256,12 +201,12 @@ class _Footer extends StatelessWidget {
           children: [
             TextSpan(
               text: 'শর্তাবলী',
-              style: TextStyle(color: Color(0xFFD0BB95)),
+              style: TextStyle(color: AppColors.primary),
             ),
             TextSpan(text: ' এবং '),
             TextSpan(
               text: 'গোপনীয়তা নীতিতে',
-              style: TextStyle(color: Color(0xFFD0BB95)),
+              style: TextStyle(color: AppColors.primary),
             ),
             TextSpan(text: ' সম্মত হচ্ছেন।'),
           ],
